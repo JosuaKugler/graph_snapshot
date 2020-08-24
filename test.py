@@ -53,3 +53,4 @@ def Kruskal(G): # in dieser Implementierung O(E*(E + V)), optimal ist O(E log E)
 Kruskal(G)
 
 gs.compile("test_dir")
+gs.beamer_slide("test_dir", title="very cool title", path="kruskal_slide.tex")

@@ -65,5 +65,3 @@ def beamer_slide(directory, title=None, path=None):
         with open(path, "w") as f:
             f.write(slidecode)
     return slidecode
-
-print(beamer_slide("test_dir", title="very cool title", path="kruskal_slide.tex"))
