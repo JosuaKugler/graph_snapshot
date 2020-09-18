@@ -16,11 +16,22 @@ def snapshot(G,graph_list=default_graph_list):
     H = copy.deepcopy(G)
     graph_list.append(H)
 
-def compile(dir, graph_list=default_graph_list):
+def setlabelweight(G, scale_edge_lengths):
+    for edge in G.edges():
+        try:
+            G.edges[edge]['label'] = G.edges[edge]['weight']
+            G.edges[edge]['len'] = 0.5 * scale_edge_lengths * G.edges[edge]['weight']
+            G.edges[edge]['weight'] = 1
+        except:
+            print("no weights given")
+            pass
+
+def compile(dir, graph_list=default_graph_list, label_with_weight=True, scale_total = 1, scale_edge_lengths = 1):
     """
     creates a new directory if dir doesn't exist
     takes graphs in graph_list and writes their dot code and tikz code to files in dir
     if graph_list isn't explicitly set, it takes default_graph_list
+    label_with_weight: add edge weight as label
     --------------------------------------------------------------------------
     options:
     see https://dot2tex.readthedocs.io/en/latest/usage_guide.html
@@ -34,11 +45,13 @@ def compile(dir, graph_list=default_graph_list):
     for index, graph in enumerate(graph_list):
         filename = 'graph' + str(index) + '.dot'
         filenametikz = 'graph' + str(index) + '.tex'
+        if label_with_weight:
+            setlabelweight(graph, scale_edge_lengths)   
         write_dot(graph, filename)
         with open(filename, "r") as f:
             dotgraph = f.read()
         with open(filenametikz, "w") as f:
-            options = {'format':"tikz", 'textmode':"math", 'output':filenametikz, 'graphstyle':"scale=0.5, auto", 'tikzedgelabels':True, 'prog':"neato", 'figonly':True, 'force':True}
+            options = {'format':"tikz", 'textmode':"math", 'output':filenametikz, 'graphstyle':"scale=" + str(scale_total) + ", every node/.style={transform shape}", 'tikzedgelabels':False, 'prog':"neato", 'figonly':True, 'force':True}
             f.write(dot2tex.dot2tex(dotgraph, **options))
         
     os.chdir(parentpath)
@@ -46,9 +59,15 @@ def compile(dir, graph_list=default_graph_list):
 def beamer_slide(directory, title=None, path=None):
     content = os.listdir(directory)
     texfiles = []
-    for filename in content:
-        if filename[-4:] == ".tex":
-            texfiles.append(filename)
+    index = 0
+    next = True
+    while next:
+        nextfile = f"graph{index}.tex"
+        if nextfile in content:
+            texfiles.append(nextfile)
+            index += 1
+        else:
+            next = False
     slidelines = [r"\begin{frame}"]
     if title:
         slidelines.append(r"\frametitle{" + title + r"}")
