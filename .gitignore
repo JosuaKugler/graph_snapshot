@@ -1,15 +1,15 @@
 #own stuff
 test_dir/
-.aux
-.fdb_latexmk
-.synctex.gz
-.snm
-.toc
-.nav
-.out
-.log
-.fls
-
+*.aux
+*.fdb_latexmk
+*.synctex.gz
+*.snm
+*.toc
+*.nav
+*.out
+*.log
+*.fls
+*.pdf
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
