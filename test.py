@@ -2,7 +2,7 @@
 import networkx as nx
 import graph_snapshot as gs
 
-edges = [("a","b", 5), ("c","b", 7), ("a","d", 3), ("d","b", 1), ("a","c", 4), ("d", "e", 3), ("a", "e", 5), ("a", "f", 3), ("b", "f", 2), ("c", "f", 5)]
+edges = [("a","b", 5), ("c","b", 7), ("a","d", 3), ("d","b", 4), ("a","c", 4), ("d", "e", 3), ("a", "e", 5), ("a", "f", 2), ("b", "f", 2), ("c", "f", 5)]
 
 G = nx.Graph()
 G.add_weighted_edges_from(edges, color = 'black')
@@ -51,5 +51,5 @@ def Kruskal(G): # in dieser Implementierung O(E*(E + V)), optimal ist O(E log E)
 
 Kruskal(G)
 
-gs.compile("test_dir", scale_total=0.7, scale_edge_lengths=1.1)
+gs.compile("test_dir", scale_total=1, scale_edge_lengths=1, orientation = "0", overlap = "false", splines = "true",sep = "0")
 gs.beamer_slide("test_dir", title="very cool title", path="kruskal_slide.tex")

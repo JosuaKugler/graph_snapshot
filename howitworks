@@ -1,0 +1,5 @@
+part 1: give python graph edges/nodes attributes
+        python graph -> dot language (using netwokx.writedot) -
+        - our program modifies dot code to add graph attributes (splines, orientation etc.) -
+        - final dot code -> tikz code (dot2tex with program neato)
+part 2: provide some nice functions to easily integrate tikzpictures (e.g. in a beamer slide)

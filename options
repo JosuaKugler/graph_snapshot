@@ -1,0 +1,8 @@
++ scale whole tikzpicture
++ scale only length of edges
++ set weight as length
++ set weight as label
+- pass style to edges or nodes (tikz-understandable: either use existing tikz styles or define own)
+    basic style passing works, probably provide python interface by passing style json
++ set "splines", "overlap", "orientation/rotation" values (see https://www.graphviz.org/pdf/neatoguide.pdf or http://www.graphviz.org/doc/info/attrs.html)
++ set texmode https://dot2tex.readthedocs.io/en/latest/usage_guide.html

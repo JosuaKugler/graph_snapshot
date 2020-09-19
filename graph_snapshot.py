@@ -16,6 +16,10 @@ def snapshot(G,graph_list=default_graph_list):
     H = copy.deepcopy(G)
     graph_list.append(H)
 
+def setnodestocircles(G):
+    for node in G.nodes():
+        G.nodes[node]['shape'] = "circle"
+
 def setlabelweight(G, scale_edge_lengths):
     for edge in G.edges():
         try:
@@ -26,7 +30,7 @@ def setlabelweight(G, scale_edge_lengths):
             print("no weights given")
             pass
 
-def compile(dir, graph_list=default_graph_list, label_with_weight=True, scale_total = 1, scale_edge_lengths = 1):
+def compile(dir, graph_list=default_graph_list, label_with_weight=True, scale_total = 1, scale_edge_lengths = 1, texmode = "math", **kwargs):
     """
     creates a new directory if dir doesn't exist
     takes graphs in graph_list and writes their dot code and tikz code to files in dir
@@ -42,16 +46,34 @@ def compile(dir, graph_list=default_graph_list, label_with_weight=True, scale_to
     except:
         os.mkdir(dir)
         os.chdir(dir)
+    os.system("rm -f graph*.tex")
+    os.system("rm -f graph*.dot")
     for index, graph in enumerate(graph_list):
         filename = 'graph' + str(index) + '.dot'
         filenametikz = 'graph' + str(index) + '.tex'
         if label_with_weight:
             setlabelweight(graph, scale_edge_lengths)   
+        setnodestocircles(graph)
         write_dot(graph, filename)
+        with open(filename, "r") as f:
+            lines = f.readlines()
+            graphoptions = "      graph   ["
+            for arg in kwargs:
+                if arg in ["overlap", "splines", "sep", "orientation"]:
+                    graphoptions += arg + "=" + kwargs[arg] + ", "
+                else:
+                    raise  Exception(f"Unknown keywordargument {arg}.")
+            graphoptions = graphoptions[:-2]
+            graphoptions += "];\n"
+            lines.insert(1, graphoptions)
+        with open (filename, "w") as f:
+            f.writelines(lines)
         with open(filename, "r") as f:
             dotgraph = f.read()
         with open(filenametikz, "w") as f:
-            options = {'format':"tikz", 'textmode':"math", 'output':filenametikz, 'graphstyle':"scale=" + str(scale_total) + ", every node/.style={transform shape}", 'tikzedgelabels':False, 'prog':"neato", 'figonly':True, 'force':True}
+            if texmode not in ["math", "verbatim", "raw"]:
+                raise Exception(f"texmode was set to {texmode}, but can only be set to 'math', 'verbatim' or 'raw'.")
+            options = {'format':"tikz", 'texmode':texmode, 'output':filenametikz, 'graphstyle':"scale=" + str(scale_total) + ", every node/.style={transform shape}", 'tikzedgelabels':False, 'prog':"neato", 'figonly':True, 'force':True}
             f.write(dot2tex.dot2tex(dotgraph, **options))
         
     os.chdir(parentpath)
