@@ -1,5 +1,4 @@
 import networkx as nx
-#import matplotlib.pyplot as plt
 from networkx.drawing.nx_agraph import write_dot
 import pygraphviz
 import dot2tex
@@ -16,21 +15,18 @@ def snapshot(G,graph_list=default_graph_list):
     H = copy.deepcopy(G)
     graph_list.append(H)
 
-def setnodestocircles(G):
+def setNodesToCircleShape(G):
     for node in G.nodes():
-        G.nodes[node]['shape'] = "circle"
+        G.nodes[node]['shape'] = "ellipse"
 
-def setlabelweight(G, scale_edge_lengths):
+def setLenAsLabel(G):
     for edge in G.edges():
         try:
-            G.edges[edge]['label'] = G.edges[edge]['weight']
-            G.edges[edge]['len'] = 0.5 * scale_edge_lengths * G.edges[edge]['weight']
-            G.edges[edge]['weight'] = 1
+            G.edges[edge]['label'] = G.edges[edge]['len']
         except:
-            print("no weights given")
-            pass
+            raise Exception("no len given")
 
-def compile(dir, graph_list=default_graph_list, label_with_weight=True, scale_total = 1, scale_edge_lengths = 1, texmode = "math", **kwargs):
+def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabel=True, scale_total = 1, scale_edge_lengths = 1, texmode = "math", **kwargs):
     """
     creates a new directory if dir doesn't exist
     takes graphs in graph_list and writes their dot code and tikz code to files in dir
@@ -39,6 +35,11 @@ def compile(dir, graph_list=default_graph_list, label_with_weight=True, scale_to
     --------------------------------------------------------------------------
     options:
     see https://dot2tex.readthedocs.io/en/latest/usage_guide.html
+
+    edge attributes:
+        - 'len': length of edge
+        - 'label': tikz edge label
+        - 'weight': specifies how much the edge is weighted in the optimization process
     """
     parentpath = os.getcwd()
     try:
@@ -50,10 +51,14 @@ def compile(dir, graph_list=default_graph_list, label_with_weight=True, scale_to
     os.system("rm -f graph*.dot")
     for index, graph in enumerate(graph_list):
         filename = 'graph' + str(index) + '.dot'
-        filenametikz = 'graph' + str(index) + '.tex'
-        if label_with_weight:
-            setlabelweight(graph, scale_edge_lengths)   
-        setnodestocircles(graph)
+        filenametikz = 'graph' + str(index) + '.tex' 
+        
+        if lenAsLabel:
+            setLenAsLabel(graph)
+        #factor 0.5 turned out to look nice on beamer presentations
+        for edge in graph.edges:
+            graph.edges[edge]['len'] = 0.5 * scale_edge_lengths * graph.edges[edge]['len']
+        setNodesToCircleShape(graph)
         write_dot(graph, filename)
         with open(filename, "r") as f:
             lines = f.readlines()
@@ -73,7 +78,7 @@ def compile(dir, graph_list=default_graph_list, label_with_weight=True, scale_to
         with open(filenametikz, "w") as f:
             if texmode not in ["math", "verbatim", "raw"]:
                 raise Exception(f"texmode was set to {texmode}, but can only be set to 'math', 'verbatim' or 'raw'.")
-            options = {'format':"tikz", 'texmode':texmode, 'output':filenametikz, 'graphstyle':"scale=" + str(scale_total) + ", every node/.style={transform shape}", 'tikzedgelabels':False, 'prog':"neato", 'figonly':True, 'force':True}
+            options = {'format':"tikz", 'texmode':texmode, 'output':filenametikz, 'graphstyle':"scale=" + str(scale_total) + ", auto, every node/.style={transform shape}", 'tikzedgelabels':tikzedgelabels, 'prog':"neato", 'figonly':True, 'force':True}
             f.write(dot2tex.dot2tex(dotgraph, **options))
         
     os.chdir(parentpath)

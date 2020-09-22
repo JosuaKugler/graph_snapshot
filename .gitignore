@@ -1,5 +1,6 @@
 #own stuff
 test_dir/
+.vscode/
 *.aux
 *.fdb_latexmk
 *.synctex.gz

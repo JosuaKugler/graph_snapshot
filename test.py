@@ -4,8 +4,11 @@ import graph_snapshot as gs
 
 edges = [("a","b", 5), ("c","b", 7), ("a","d", 3), ("d","b", 4), ("a","c", 4), ("d", "e", 3), ("a", "e", 5), ("a", "f", 2), ("b", "f", 2), ("c", "f", 5)]
 
+edges2 = [("a","b", {"len": 5}), ("c","b", {"len": 7}), ("a","d", {"len": 3}), ("d","b", {"len": 4}), ("a","c", {"len": 4}), ("a", "f", {"len": 2}), ("b", "f", {"len": 2}), ("c", "f", {"len": 2})]
+
 G = nx.Graph()
-G.add_weighted_edges_from(edges, color = 'black')
+G.add_edges_from(edges2, color = 'black')
+#G.add_weighted_edges_from(edges, color = 'black')
 
 def isCyclicUtil(G, v, visited, parent):
     visited[v] = True
@@ -36,7 +39,7 @@ def Kruskal(G): # in dieser Implementierung O(E*(E + V)), optimal ist O(E log E)
     gs.snapshot(G)
     nodes = set(G)
     edges = list(G.edges)
-    edges.sort(key = lambda edge: G.edges[edge]["weight"]) # O(E log E)
+    edges.sort(key = lambda edge: G.edges[edge]["len"]) # O(E log E)
     edges.reverse()
     
     colorededges = set([])
