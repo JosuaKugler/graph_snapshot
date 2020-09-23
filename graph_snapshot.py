@@ -83,25 +83,30 @@ def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabe
         
     os.chdir(parentpath)
 
-def beamer_slide(directory, title=None, path=None):
+def beamer_slide(directory, title=None, path=None, caption_list=[]):
+    caption_iterator = iter(caption_list)
     content = os.listdir(directory)
     texfiles = []
     index = 0
-    next = True
-    while next:
+    next_helper = True
+    while next_helper:
         nextfile = f"graph{index}.tex"
         if nextfile in content:
             texfiles.append(nextfile)
             index += 1
         else:
-            next = False
+            next_helper = False
     slidelines = [r"\begin{frame}"]
     if title:
         slidelines.append(r"\frametitle{" + title + r"}")
     for i, texfile in enumerate(texfiles):
         filerawname = texfile.split(".")[0]
         filenamewithdir = os.path.join(directory, filerawname)
-        line = r"\only<" + str(i+1) + r">{\input{" + filenamewithdir + r".tex}}"
+        try:
+            current_caption = next(caption_iterator)
+            line = r"\only<" + str(i+1) + r">{\begin{figure} \input{" + filenamewithdir + r".tex} \caption{" + current_caption + r"} \end{figure}}"
+        except: 
+            line = r"\only<" + str(i+1) + r">{\begin{figure} \input{" + filenamewithdir + r".tex} \end{figure}}"
         slidelines.append(line)
     slidelines.append(r"\end{frame}")
     slidecode = ""
@@ -111,3 +116,38 @@ def beamer_slide(directory, title=None, path=None):
         with open(path, "w") as f:
             f.write(slidecode)
     return slidecode
+
+def latex_document(directory, title=None, path=None, caption_list=[]):
+    caption_iterator = iter(caption_list)
+    content = os.listdir(directory)
+    texfiles = []
+    index = 0
+    next_helper = True
+    while next_helper:
+        nextfile = f"graph{index}.tex"
+        if nextfile in content:
+            texfiles.append(nextfile)
+            index += 1
+        else:
+            next_helper = False
+    latex_doc_lines = [r"\documentclass{article}", r"\usepackage{tikz}", r"\usetikzlibrary{decorations,arrows,shapes}", r"\usepackage{amsmath}", r"\usepackage{float}","\n", r"\begin{document}", "\n"]
+    if title:
+        latex_doc_lines.append(r"\section{" + title + r"}")
+    for i, texfile in enumerate(texfiles):
+        filerawname = texfile.split(".")[0]
+        filenamewithdir = os.path.join(directory, filerawname)
+        try:
+            current_caption = next(caption_iterator)
+            line = r"\begin{figure}[H] \input{" + filenamewithdir + r".tex} \caption{" + current_caption + r"} \end{figure}"
+        except: 
+            line = r"\begin{figure}[H] \input{" + filenamewithdir + r".tex} \end{figure}"
+        latex_doc_lines.append(line)
+    latex_doc_lines.append("\n")
+    latex_doc_lines.append(r"\end{document}")
+    latex_doc_code = ""
+    for line in latex_doc_lines:
+        latex_doc_code += line + "\n"
+    if path:
+        with open(path, "w") as f:
+            f.write(latex_doc_code)
+    return latex_doc_code
