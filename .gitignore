@@ -1,6 +1,9 @@
 #own stuff
 test_dir/
 .vscode/
+.build/
+.static/
+.templates/
 *.aux
 *.fdb_latexmk
 *.synctex.gz
