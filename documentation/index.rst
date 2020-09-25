@@ -1,8 +1,8 @@
 .. _contents:
 
-==========================================
-Welcome to graph_snapshot's documentation!
-==========================================
+============================
+graph_snapshot documentation
+============================
 
 .. toctree::
    :maxdepth: 2
@@ -10,6 +10,8 @@ Welcome to graph_snapshot's documentation!
    introduction
    install
    tutorial
+   examples
+   reference
 
 Indices and tables
 ==================
