@@ -1,4 +1,6 @@
 #own stuff
+documentation/_build
+directory_where_you_want_the_tikz_files/
 test_dir/
 .vscode/
 .build/

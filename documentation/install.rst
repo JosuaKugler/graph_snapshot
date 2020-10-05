@@ -47,7 +47,7 @@ For example
 
 If you didn't install in the standard Python site-packages directory
 you will need to set your PYTHONPATH variable to the alternate location.
-Seehttp://docs.python.org/2/install/index.html#search-path for further details.
+See https://docs.python.org/2/install/index.html#search-path for further details.
 
 
 Requirements

@@ -1,5 +1,8 @@
 Reference
 =========
 
-.. automodule:: graph_snapshot
-   :members:
+.. autofunction:: graph_snapshot.compile
+
+.. autofunction:: graph_snapshot.beamer_slide
+
+.. autofunction:: graph_snapshot.latex_document

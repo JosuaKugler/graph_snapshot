@@ -1,3 +1,7 @@
+"""
+graph_snapshot
+==================
+"""
 import networkx as nx
 from networkx.drawing.nx_agraph import write_dot
 import pygraphviz
@@ -11,15 +15,42 @@ def snapshot(G,graph_list=default_graph_list):
     """
     takes a given graph G and appends it to graph_list.
     If no graph_list is given, it is appended to a global list
+
+    Parameters
+    -----------
+    G
+        the graph to be appended to graph_list
+
+    graph_list
+        the list where graphs are saved
+
     """
     H = copy.deepcopy(G)
     graph_list.append(H)
 
 def setNodesToCircleShape(G):
+    """
+    set node shape to circle
+
+    Parameters
+    -----------
+    G
+        the graph whose nodes we talk about
+
+    """
     for node in G.nodes():
-        G.nodes[node]['shape'] = "ellipse"
+        G.nodes[node]['shape'] = "circle"
 
 def setLenAsLabel(G):
+    """
+    set len attribute of edges as label
+
+    Parameters
+    -----------
+    G
+        the graph whose nodes we talk about
+
+    """
     for edge in G.edges():
         try:
             G.edges[edge]['label'] = G.edges[edge]['len']
@@ -32,7 +63,6 @@ def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabe
     takes graphs in graph_list and writes their dot code and tikz code to files in dir
     if graph_list isn't explicitly set, it takes default_graph_list
     label_with_weight: add edge weight as label
-    --------------------------------------------------------------------------
     options:
     see https://dot2tex.readthedocs.io/en/latest/usage_guide.html
 
@@ -40,6 +70,15 @@ def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabe
         - 'len': length of edge
         - 'label': tikz edge label
         - 'weight': specifies how much the edge is weighted in the optimization process
+    
+    Parameters
+    -----------
+    dir
+        directory
+    graph_list
+        graph_list
+
+
     """
     parentpath = os.getcwd()
     try:
@@ -62,7 +101,7 @@ def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabe
         write_dot(graph, filename)
         with open(filename, "r") as f:
             lines = f.readlines()
-            graphoptions = "      graph   ["
+            graphoptions = "      graph   [  "
             for arg in kwargs:
                 if arg in ["overlap", "splines", "sep", "orientation"]:
                     graphoptions += arg + "=" + kwargs[arg] + ", "
@@ -84,6 +123,15 @@ def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabe
     os.chdir(parentpath)
 
 def beamer_slide(directory, title=None, path=None, caption_list=[]):
+    """
+    generate beamer slide
+
+    Parameters
+    ------------
+    directory
+        directory
+    
+    """
     caption_iterator = iter(caption_list)
     content = os.listdir(directory)
     texfiles = []
@@ -118,6 +166,15 @@ def beamer_slide(directory, title=None, path=None, caption_list=[]):
     return slidecode
 
 def latex_document(directory, title=None, path=None, caption_list=[]):
+    """
+    returns a latex_document
+
+    Parameters
+    ------------
+    directory
+        directory
+
+    """
     caption_iterator = iter(caption_list)
     content = os.listdir(directory)
     texfiles = []
@@ -133,7 +190,7 @@ def latex_document(directory, title=None, path=None, caption_list=[]):
     latex_doc_lines = [r"\documentclass{article}", r"\usepackage{tikz}", r"\usetikzlibrary{decorations,arrows,shapes}", r"\usepackage{amsmath}", r"\usepackage{float}","\n", r"\begin{document}", "\n"]
     if title:
         latex_doc_lines.append(r"\section{" + title + r"}")
-    for i, texfile in enumerate(texfiles):
+    for texfile in texfiles:
         filerawname = texfile.split(".")[0]
         filenamewithdir = os.path.join(directory, filerawname)
         try:
@@ -151,3 +208,30 @@ def latex_document(directory, title=None, path=None, caption_list=[]):
         with open(path, "w") as f:
             f.write(latex_doc_code)
     return latex_doc_code
+
+def standalone(directory):
+    content = os.listdir(directory)
+    texfiles = []
+    index = 0
+    next_helper = True
+    while next_helper:
+        nextfile = f"graph{index}.tex"
+        if nextfile in content:
+            texfiles.append(nextfile)
+            index += 1
+        else:
+            next_helper = False
+    #latex_doc_lines = [r"\documentclass{standalone}", r"\usepackage{tikz}", r"\usetikzlibrary{decorations,arrows,shapes}", "\n", r"\begin{document}"]
+    os.chdir(directory)
+    for texfile in texfiles:
+        filerawname = texfile.split(".")[0]
+        latex_document = r"""\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{decorations,arrows,shapes}
+\begin{document}
+\input{""" + filerawname + r""".tex}
+\end{document}"""
+        with open(filerawname + "stda.tex", "w+") as f:
+            f.write(latex_document)
+        
+        os.system(f"pdflatex {filerawname}stda.tex")

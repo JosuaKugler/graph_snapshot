@@ -48,7 +48,8 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
-    'sphinx.ext.napoleon'
+    'sphinx.ext.napoleon',
+    'sphinxcontrib.tikz'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -185,10 +186,20 @@ epub_exclude_files = ['search.html']
 
 # -- Extension configuration -------------------------------------------------
 
+# -- Options for sphinxcontrib.tikz extension --------------------------------
+
+tikz_proc_suite = 'GhostScript'
+tikz_transparent = True
+
+tikz_tikzlibraries = 'decorations,arrows,shapes'
+
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/', None),
+    'networkx': ('https://networkx.github.io/documentation/stable/', None)
+}
 
 # -- Options for todo extension ----------------------------------------------
 
