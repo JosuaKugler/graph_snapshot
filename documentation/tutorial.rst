@@ -72,3 +72,42 @@ You can then manually include the tex files into your document. The following tw
 
 Configuration
 -------------
+
+Using multiple "Screenshot series": `graph_list`
+************************************************
+
+Sometimes you might want to visualize two algorithms in the same file.
+Then you should make use of the `graph_list` concept. First, specify a list for each algorithm::
+
+    >>> algorithm1_list = []
+    >>> algorithm2_list = []
+
+When calling `gs.snapshot`, decide for one list, e.g.::
+
+    >>> gs.snapshot(G, graph_list = algorithm1_list)
+
+Finally, you can compile each list on it's own::
+
+    >>> gs.compile("algorithm1_dir", graph_list = algorithm1_list)
+    >>> gs.compile("algorithm2_dir", graph_list = algorithm2_list)
+
+
+Keywordarguments for Edges/Nodes
+********************************
+
+As you have already seen, you can pass keywordarguments to graph edges. The same concept works for nodes as well.
+Any keyword that is understandable by tikz will have an effect on the resulting image.
+If you want to add specific style to your edges, you can also define your own tikz style in the document header and use that style as an edge attribute.
+There are also some edge keywords that have specific meaning.
+
+* `len` specifies the length of the edge. The graph layout algorithm will try to fit this lenght as close as possible, but as you can see in the second figure of the last section, if you hurt the triangle inequality, this can't work.
+
+* `weight` specifies how much this edge is considered in computing the layout. In general, this option will not be needed.
+
+* `label` has the same meaning as in tikz, however it can be overwritten by the len argument if you set `lenAsLabel = True` when calling the compile function.
+
+
+Keywordarguments for `compile` 
+******************************
+
+We have already mentioned the `graph_list` and `lenAsLabel` keywords in the previous two subsections. See the reference for a detailed description of the other arguments.

@@ -188,7 +188,7 @@ epub_exclude_files = ['search.html']
 
 # -- Options for sphinxcontrib.tikz extension --------------------------------
 
-tikz_proc_suite = 'GhostScript'
+#tikz_proc_suite = 'GhostScript'
 tikz_transparent = True
 
 tikz_tikzlibraries = 'decorations,arrows,shapes'
