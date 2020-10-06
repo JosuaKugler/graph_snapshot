@@ -10,6 +10,6 @@ gs.snapshot(G)
 G.add_edge("c", "f", len = 2, color = 'red')
 gs.snapshot(G)
 
-gs.compile("directory_where_you_want_the_tikz_files")
+gs.compile("directory_where_you_want_the_tikz_files", lenAsLabel=True)
 
 gs.standalone("directory_where_you_want_the_tikz_files")

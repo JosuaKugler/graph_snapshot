@@ -57,28 +57,41 @@ def setLenAsLabel(G):
         except:
             raise Exception("no len given")
 
-def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabel=True, scale_total = 1, scale_edge_lengths = 1, texmode = "math", **kwargs):
+def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabel = False, scale_total = 1, scale_edge_lengths = 1, texmode = "math", **kwargs):
     """
-    creates a new directory if dir doesn't exist
-    takes graphs in graph_list and writes their dot code and tikz code to files in dir
-    if graph_list isn't explicitly set, it takes default_graph_list
-    label_with_weight: add edge weight as label
-    options:
-    see https://dot2tex.readthedocs.io/en/latest/usage_guide.html
+    Creates graph<i>.dot files containing the dot code for the graph in the snapshot with index <i> and graph<i>.tex files containing the tikz code for the graph in the snapshot with index <i>. The .dot files are only there because the dot code is created anyway and it can be useful for debugging to see the dot code.
 
-    edge attributes:
-        - 'len': length of edge
-        - 'label': tikz edge label
-        - 'weight': specifies how much the edge is weighted in the optimization process
-    
     Parameters
     -----------
     dir
-        directory
+        directory where all output files are placed. If it doesn't exist, it is created.
+        If it already exists, all further graph<i>.dot or graph<i>.tex files in it are deleted.
+
     graph_list
-        graph_list
+        the list of snapshots to be processed and converted into tikz code. Default is to use `default_graph_list` which is also default for the snapshot function. If in snapshot a `graph_list` is specified, this list must be specified in compile aswell. For detailed instruction how to use this, look at the tutorial in the documentation.
+    
+    tikzedgelabels
+        Defaults to True, meaning that the tikz edge label placement algorithm is used to position the labels.
+        If set to False, the graphviz algorithm is used instead. Just try out what gives better performance for your graph.
 
+    lenAsLabel
+        Defaults to False. If set to True, the 'len' attribute of the graph edges will be used as label in the final tikz graph.
+        Warning: This will override any 'label' attribute given to the graph edge.
+    
+    scale_total
+        Default is 1, resulting in no scaling at all. If the tikz output size is inappropriate in your document, you can use this factor to scale the whole tikzpicture.
+    
+    scale_edge_lengths
+        Default is 1, resulting in no scaling at all. If the ratio of edge length to node size is not appropriate, you can use this factor to scale the edge lengths only. This will result in a differently sized picture, however you can scale the total size of the picture with `scale_total`.
+    
+    texmode
+        defaults to 'math', meaning that the text in your node/edge labels will be processed as latex math.
+        You can alternatively set it to 'verbatim' or 'raw', resulting in the corresponding processing.
 
+    **kwargs
+        the keywords and arguments are taken from http://www.graphviz.org/doc/info/attrs.html
+        and have exactly the same meaning.
+        However, only `overlap`,  `sep`, `splines` and `orientation` have shown an effect in this function, so other keywords are not permitted.
     """
     parentpath = os.getcwd()
     try:

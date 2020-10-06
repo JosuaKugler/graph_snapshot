@@ -30,7 +30,7 @@ Everytime you want the current state of the algorithm to be visualized, you can 
 
 Once you are done with your algorithm, it is time to create the tikz code from your snapshots::
 
-    >>> gs.compile("directory_where_you_want_the_tikz_files")
+    >>> gs.compile("directory_where_you_want_the_tikz_files", lenAsLabel = True)
 
 The directory should look as follows: 
 
