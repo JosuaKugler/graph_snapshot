@@ -137,13 +137,26 @@ def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabe
 
 def beamer_slide(directory, title=None, path=None, caption_list=[]):
     """
-    generate beamer slide
+    returns a .tex file that can be included as a frame in a beamer presentation.
 
     Parameters
     ------------
     directory
-        directory
+        directory where 'graph<i>.tex' files are located.
+        graphn.tex is included in the frame, if all files graphi.tex with 0 < i < n are in `directory`.
     
+    title
+        The frametitle of the returned frame.
+    
+    path
+        the directory where the returned .tex file is placed.
+        If it doesn't exist, it is created.
+
+    caption_list
+        the i-th caption gets assigned to the i-th snapshot.
+        If there are too many captions they are simply ignored.
+        If there are not enough captions, the last snapshots get no caption.
+        
     """
     caption_iterator = iter(caption_list)
     content = os.listdir(directory)
@@ -180,12 +193,25 @@ def beamer_slide(directory, title=None, path=None, caption_list=[]):
 
 def latex_document(directory, title=None, path=None, caption_list=[]):
     """
-    returns a latex_document
+    returns a compilable .tex file with all snapshots as figures.
 
     Parameters
     ------------
     directory
-        directory
+        directory where 'graph<i>.tex' files are located.
+        graphn.tex is included in the frame, if all files graphi.tex with 0 < i < n are in `directory`.
+    
+    title
+        the title of the document
+
+    path
+        the directory where the returned .tex file is placed.
+        If it doesn't exist, it is created.
+    
+    caption_list
+        the i-th caption gets assigned to the i-th snapshot.
+        If there are too many captions they are simply ignored.
+        If there are not enough captions, the last snapshots get no caption.
 
     """
     caption_iterator = iter(caption_list)

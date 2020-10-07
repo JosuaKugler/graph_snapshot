@@ -84,12 +84,22 @@ However, only <cite>overlap</cite>,  <cite>sep</cite>, <cite>splines</cite> and 
 <dl class="function">
 <dt id="graph_snapshot.beamer_slide">
 <code class="descclassname">graph_snapshot.</code><code class="descname">beamer_slide</code><span class="sig-paren">(</span><em>directory</em>, <em>title=None</em>, <em>path=None</em>, <em>caption_list=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graph_snapshot.html#beamer_slide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#graph_snapshot.beamer_slide" title="Permalink to this definition">¶</a></dt>
-<dd><p>generate beamer slide</p>
+<dd><p>returns a .tex file that can be included as a frame in a beamer presentation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> – directory</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>directory</strong> – directory where ‘graph&lt;i&gt;.tex’ files are located.
+graphn.tex is included in the frame, if all files graphi.tex with 0 &lt; i &lt; n are in <cite>directory</cite>.</li>
+<li><strong>title</strong> – The frametitle of the returned frame.</li>
+<li><strong>path</strong> – the directory where the returned .tex file is placed.
+If it doesn’t exist, it is created.</li>
+<li><strong>caption_list</strong> – the i-th caption gets assigned to the i-th snapshot.
+If there are too many captions they are simply ignored.
+If there are not enough captions, the last snapshots get no caption.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -98,12 +108,22 @@ However, only <cite>overlap</cite>,  <cite>sep</cite>, <cite>splines</cite> and 
 <dl class="function">
 <dt id="graph_snapshot.latex_document">
 <code class="descclassname">graph_snapshot.</code><code class="descname">latex_document</code><span class="sig-paren">(</span><em>directory</em>, <em>title=None</em>, <em>path=None</em>, <em>caption_list=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graph_snapshot.html#latex_document"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#graph_snapshot.latex_document" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns a latex_document</p>
+<dd><p>returns a compilable .tex file with all snapshots as figures.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> – directory</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>directory</strong> – directory where ‘graph&lt;i&gt;.tex’ files are located.
+graphn.tex is included in the frame, if all files graphi.tex with 0 &lt; i &lt; n are in <cite>directory</cite>.</li>
+<li><strong>title</strong> – the title of the document</li>
+<li><strong>path</strong> – the directory where the returned .tex file is placed.
+If it doesn’t exist, it is created.</li>
+<li><strong>caption_list</strong> – the i-th caption gets assigned to the i-th snapshot.
+If there are too many captions they are simply ignored.
+If there are not enough captions, the last snapshots get no caption.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>

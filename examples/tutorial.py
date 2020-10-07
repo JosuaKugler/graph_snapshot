@@ -1,5 +1,5 @@
 import networkx as nx
-import graph_snapshot as gs
+import graph_snapshot_pkg.graph_snapshot as gs
 
 G = nx.Graph()
 
