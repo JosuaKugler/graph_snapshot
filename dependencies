@@ -1,9 +1,0 @@
-python:
-- networkx
-- pygraphviz
-	- depends on graphviz, graphviz-dev (linux: apt install graphviz, graphviz-dev), windows: ?
-- dot2tex
-
-latex:
--tikz, amsmath
--tikzlibraries: arrows, shapes, decorations 
