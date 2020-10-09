@@ -8,3 +8,5 @@ Reference
 .. autofunction:: graph_snapshot.beamer_slide
 
 .. autofunction:: graph_snapshot.latex_document
+
+.. autofunction:: graph_snapshot.standalone

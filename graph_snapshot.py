@@ -13,16 +13,16 @@ default_graph_list = []
 
 def snapshot(G,graph_list=default_graph_list):
     """
-    takes a given graph G and appends it to graph_list.
-    If no graph_list is given, it is appended to a global list
+    Takes a given graph G and appends it to graph_list.
+    If no graph_list is given, it is appended to a global list.
 
     Parameters
     -----------
     G
-        the graph to be appended to graph_list
+        The graph to be appended to graph_list.
 
     graph_list
-        the list where graphs are saved
+        The list where graphs are saved.
 
     """
     H = copy.deepcopy(G)
@@ -64,11 +64,11 @@ def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabe
     Parameters
     -----------
     dir
-        directory where all output files are placed. If it doesn't exist, it is created.
+        Directory where all output files are placed. If it doesn't exist, it is created.
         If it already exists, all further graph<i>.dot or graph<i>.tex files in it are deleted.
 
     graph_list
-        the list of snapshots to be processed and converted into tikz code. Default is to use `default_graph_list` which is also default for the snapshot function. If in snapshot a `graph_list` is specified, this list must be specified in compile aswell. For detailed instruction how to use this, look at the tutorial in the documentation.
+        The list of snapshots to be processed and converted into tikz code. Default is to use `default_graph_list` which is also default for the snapshot function. If in snapshot a `graph_list` is specified, this list must be specified in compile aswell. For detailed instruction how to use this, look at the tutorial in the documentation.
     
     tikzedgelabels
         Defaults to True, meaning that the tikz edge label placement algorithm is used to position the labels.
@@ -85,11 +85,11 @@ def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabe
         Default is 1, resulting in no scaling at all. If the ratio of edge length to node size is not appropriate, you can use this factor to scale the edge lengths only. This will result in a differently sized picture, however you can scale the total size of the picture with `scale_total`.
     
     texmode
-        defaults to 'math', meaning that the text in your node/edge labels will be processed as latex math.
+        Defaults to 'math', meaning that the text in your node/edge labels will be processed as latex math.
         You can alternatively set it to 'verbatim' or 'raw', resulting in the corresponding processing.
 
     **kwargs
-        the keywords and arguments are taken from http://www.graphviz.org/doc/info/attrs.html
+        The keywords and arguments are taken from http://www.graphviz.org/doc/info/attrs.html
         and have exactly the same meaning.
         However, only `overlap`,  `sep`, `splines` and `orientation` have shown an effect in this function, so other keywords are not permitted.
     """
@@ -137,23 +137,22 @@ def compile(dir, graph_list=default_graph_list, tikzedgelabels = True, lenAsLabe
 
 def beamer_slide(directory, title=None, path=None, caption_list=[]):
     """
-    returns a .tex file that can be included as a frame in a beamer presentation.
+    Returns a .tex file that can be included as a frame in a beamer presentation.
 
     Parameters
     ------------
     directory
-        directory where 'graph<i>.tex' files are located.
+        Directory where 'graph<i>.tex' files are located.
         graphn.tex is included in the frame, if all files graphi.tex with 0 < i < n are in `directory`.
     
     title
         The frametitle of the returned frame.
     
     path
-        the directory where the returned .tex file is placed.
-        If it doesn't exist, it is created.
+        The name of the .tex file that is to be modified.
 
     caption_list
-        the i-th caption gets assigned to the i-th snapshot.
+        The i-th caption gets assigned to the i-th snapshot.
         If there are too many captions they are simply ignored.
         If there are not enough captions, the last snapshots get no caption.
         
@@ -193,23 +192,22 @@ def beamer_slide(directory, title=None, path=None, caption_list=[]):
 
 def latex_document(directory, title=None, path=None, caption_list=[]):
     """
-    returns a compilable .tex file with all snapshots as figures.
+    Returns a compilable .tex file with all snapshots as figures.
 
     Parameters
     ------------
     directory
-        directory where 'graph<i>.tex' files are located.
+        Directory where 'graph<i>.tex' files are located.
         graphn.tex is included in the frame, if all files graphi.tex with 0 < i < n are in `directory`.
     
     title
-        the title of the document
+        The title of the document.
 
     path
-        the directory where the returned .tex file is placed.
-        If it doesn't exist, it is created.
+        The name of the .tex file that is to be modified.
     
     caption_list
-        the i-th caption gets assigned to the i-th snapshot.
+        The i-th caption gets assigned to the i-th snapshot.
         If there are too many captions they are simply ignored.
         If there are not enough captions, the last snapshots get no caption.
 
@@ -249,6 +247,16 @@ def latex_document(directory, title=None, path=None, caption_list=[]):
     return latex_doc_code
 
 def standalone(directory):
+    """
+    Returns a compilable .tex file for each image generated containing the image
+
+    Parameters 
+    ------------
+    directory
+        Directory where 'graph<i>.tex' files are located.
+        graphn.tex is included in the frame, if all files graphi.tex with 0 < i < n are in `directory`.
+
+    """
     content = os.listdir(directory)
     texfiles = []
     index = 0

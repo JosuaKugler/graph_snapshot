@@ -71,7 +71,7 @@ So make sure to be able to work with graphs.</p>
 </pre></div>
 </div>
 <div class="figure">
-<p><img src="_images/tikz-fe218e59561279ba711bba13dc007fa2159820b5.svg" alt="[&gt;=latex,line join=bevel,scale=1, auto, every node/.style={transform shape}] \node (a) at (101.02bp,141.67bp) [draw,circle] {$a$};
+<p><img src="_images/tikz-fe218e59561279ba711bba13dc007fa2159820b5.png" alt="[&gt;=latex,line join=bevel,scale=1, auto, every node/.style={transform shape}] \node (a) at (101.02bp,141.67bp) [draw,circle] {$a$};
 \node (b) at (216.6bp,198.18bp) [draw,circle] {$b$};
 \node (c) at (18.0bp,18.0bp) [draw,circle] {$c$};
 \node (d) at (76.363bp,254.03bp) [draw,circle] {$d$};
@@ -84,7 +84,7 @@ So make sure to be able to work with graphs.</p>
 \draw [black,] (b) ..controls (172.73bp,215.65bp) and (120.33bp,236.52bp)  .. node {$4$} (d);
 \draw [black,] (b) ..controls (200.95bp,173.02bp) and (193.21bp,160.57bp)  .. node {$2$} (f);" /></p>
 </div><div class="figure">
-<p><img src="_images/tikz-93a256343b4ffd40f5f5bb9753949d5c55263c0d.svg" alt="[&gt;=latex,line join=bevel,scale=1, auto, every node/.style={transform shape}]\node (a) at (18.0bp,143.38bp) [draw,circle] {$a$};
+<p><img src="_images/tikz-93a256343b4ffd40f5f5bb9753949d5c55263c0d.png" alt="[&gt;=latex,line join=bevel,scale=1, auto, every node/.style={transform shape}]\node (a) at (18.0bp,143.38bp) [draw,circle] {$a$};
 \node (b) at (142.92bp,136.8bp) [draw,circle] {$b$};
 \node (c) at (75.143bp,18.0bp) [draw,circle] {$c$};
 \node (d) at (45.066bp,253.35bp) [draw,circle] {$d$};
@@ -97,7 +97,20 @@ So make sure to be able to work with graphs.</p>
 \draw [black,] (b) ..controls (112.48bp,173.05bp) and (75.483bp,217.12bp)  .. node {$4$} (d);
 \draw [black,] (b) ..controls (117.43bp,119.85bp) and (103.97bp,110.9bp)  .. node {$2$} (f);
 \draw [red,] (c) ..controls (76.514bp,48.056bp) and (77.234bp,63.827bp)  .. node {$2$} (f);" /></p>
-</div></div>
+</div><p>If you want to include the tex files into your beamer class documentation you can instead use following to create a beamer slide containing all images:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">beamer_slide</span><span class="p">(</span><span class="s2">&quot;directory_where_you_want_the_tikz_files&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To create a single latex document containg all images call:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">latex_document</span><span class="p">(</span><span class="s2">&quot;directory_where_you_want_the_tikz_files&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The last two mentioned functions also provide several options, including: setting a title for the created beamer slide or latex document, define a path where the generated latex files will be placed or caption your images by providing a caption list as following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">beamer_slide</span><span class="p">(</span><span class="s2">&quot;directory_where_you_want_the_tikz_files&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;directory_where_returndes_tex_file_is_placed&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;caption1&quot;</span><span class="p">,</span><span class="s2">&quot;cpation2&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">latex_document</span><span class="p">(</span><span class="s2">&quot;directory_where_you_want_the_tikz_files&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;directory_where_returndes_tex_file_is_placed&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;caption1&quot;</span><span class="p">,</span><span class="s2">&quot;cpation2&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="using-multiple-screenshot-series-graph-list">

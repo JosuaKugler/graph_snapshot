@@ -35,15 +35,15 @@
 <dl class="function">
 <dt id="graph_snapshot.snapshot">
 <code class="descclassname">graph_snapshot.</code><code class="descname">snapshot</code><span class="sig-paren">(</span><em>G</em>, <em>graph_list=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graph_snapshot.html#snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#graph_snapshot.snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>takes a given graph G and appends it to graph_list.
-If no graph_list is given, it is appended to a global list</p>
+<dd><p>Takes a given graph G and appends it to graph_list.
+If no graph_list is given, it is appended to a global list.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>G</strong> – the graph to be appended to graph_list</li>
-<li><strong>graph_list</strong> – the list where graphs are saved</li>
+<li><strong>G</strong> – The graph to be appended to graph_list.</li>
+<li><strong>graph_list</strong> – The list where graphs are saved.</li>
 </ul>
 </td>
 </tr>
@@ -60,18 +60,18 @@ If no graph_list is given, it is appended to a global list</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dir</strong> – directory where all output files are placed. If it doesn’t exist, it is created.
+<li><strong>dir</strong> – Directory where all output files are placed. If it doesn’t exist, it is created.
 If it already exists, all further graph&lt;i&gt;.dot or graph&lt;i&gt;.tex files in it are deleted.</li>
-<li><strong>graph_list</strong> – the list of snapshots to be processed and converted into tikz code. Default is to use <cite>default_graph_list</cite> which is also default for the snapshot function. If in snapshot a <cite>graph_list</cite> is specified, this list must be specified in compile aswell. For detailed instruction how to use this, look at the tutorial in the documentation.</li>
+<li><strong>graph_list</strong> – The list of snapshots to be processed and converted into tikz code. Default is to use <cite>default_graph_list</cite> which is also default for the snapshot function. If in snapshot a <cite>graph_list</cite> is specified, this list must be specified in compile aswell. For detailed instruction how to use this, look at the tutorial in the documentation.</li>
 <li><strong>tikzedgelabels</strong> – Defaults to True, meaning that the tikz edge label placement algorithm is used to position the labels.
 If set to False, the graphviz algorithm is used instead. Just try out what gives better performance for your graph.</li>
 <li><strong>lenAsLabel</strong> – Defaults to False. If set to True, the ‘len’ attribute of the graph edges will be used as label in the final tikz graph.
 Warning: This will override any ‘label’ attribute given to the graph edge.</li>
 <li><strong>scale_total</strong> – Default is 1, resulting in no scaling at all. If the tikz output size is inappropriate in your document, you can use this factor to scale the whole tikzpicture.</li>
 <li><strong>scale_edge_lengths</strong> – Default is 1, resulting in no scaling at all. If the ratio of edge length to node size is not appropriate, you can use this factor to scale the edge lengths only. This will result in a differently sized picture, however you can scale the total size of the picture with <cite>scale_total</cite>.</li>
-<li><strong>texmode</strong> – defaults to ‘math’, meaning that the text in your node/edge labels will be processed as latex math.
+<li><strong>texmode</strong> – Defaults to ‘math’, meaning that the text in your node/edge labels will be processed as latex math.
 You can alternatively set it to ‘verbatim’ or ‘raw’, resulting in the corresponding processing.</li>
-<li><strong>**kwargs</strong> – the keywords and arguments are taken from <a class="reference external" href="http://www.graphviz.org/doc/info/attrs.html">http://www.graphviz.org/doc/info/attrs.html</a>
+<li><strong>**kwargs</strong> – The keywords and arguments are taken from <a class="reference external" href="http://www.graphviz.org/doc/info/attrs.html">http://www.graphviz.org/doc/info/attrs.html</a>
 and have exactly the same meaning.
 However, only <cite>overlap</cite>,  <cite>sep</cite>, <cite>splines</cite> and <cite>orientation</cite> have shown an effect in this function, so other keywords are not permitted.</li>
 </ul>
@@ -84,18 +84,17 @@ However, only <cite>overlap</cite>,  <cite>sep</cite>, <cite>splines</cite> and 
 <dl class="function">
 <dt id="graph_snapshot.beamer_slide">
 <code class="descclassname">graph_snapshot.</code><code class="descname">beamer_slide</code><span class="sig-paren">(</span><em>directory</em>, <em>title=None</em>, <em>path=None</em>, <em>caption_list=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graph_snapshot.html#beamer_slide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#graph_snapshot.beamer_slide" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns a .tex file that can be included as a frame in a beamer presentation.</p>
+<dd><p>Returns a .tex file that can be included as a frame in a beamer presentation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>directory</strong> – directory where ‘graph&lt;i&gt;.tex’ files are located.
+<li><strong>directory</strong> – Directory where ‘graph&lt;i&gt;.tex’ files are located.
 graphn.tex is included in the frame, if all files graphi.tex with 0 &lt; i &lt; n are in <cite>directory</cite>.</li>
 <li><strong>title</strong> – The frametitle of the returned frame.</li>
-<li><strong>path</strong> – the directory where the returned .tex file is placed.
-If it doesn’t exist, it is created.</li>
-<li><strong>caption_list</strong> – the i-th caption gets assigned to the i-th snapshot.
+<li><strong>path</strong> – The name of the .tex file that is to be modified.</li>
+<li><strong>caption_list</strong> – The i-th caption gets assigned to the i-th snapshot.
 If there are too many captions they are simply ignored.
 If there are not enough captions, the last snapshots get no caption.</li>
 </ul>
@@ -108,22 +107,36 @@ If there are not enough captions, the last snapshots get no caption.</li>
 <dl class="function">
 <dt id="graph_snapshot.latex_document">
 <code class="descclassname">graph_snapshot.</code><code class="descname">latex_document</code><span class="sig-paren">(</span><em>directory</em>, <em>title=None</em>, <em>path=None</em>, <em>caption_list=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graph_snapshot.html#latex_document"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#graph_snapshot.latex_document" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns a compilable .tex file with all snapshots as figures.</p>
+<dd><p>Returns a compilable .tex file with all snapshots as figures.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>directory</strong> – directory where ‘graph&lt;i&gt;.tex’ files are located.
+<li><strong>directory</strong> – Directory where ‘graph&lt;i&gt;.tex’ files are located.
 graphn.tex is included in the frame, if all files graphi.tex with 0 &lt; i &lt; n are in <cite>directory</cite>.</li>
-<li><strong>title</strong> – the title of the document</li>
-<li><strong>path</strong> – the directory where the returned .tex file is placed.
-If it doesn’t exist, it is created.</li>
-<li><strong>caption_list</strong> – the i-th caption gets assigned to the i-th snapshot.
+<li><strong>title</strong> – The title of the document.</li>
+<li><strong>path</strong> – The name of the .tex file that is to be modified.</li>
+<li><strong>caption_list</strong> – The i-th caption gets assigned to the i-th snapshot.
 If there are too many captions they are simply ignored.
 If there are not enough captions, the last snapshots get no caption.</li>
 </ul>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="graph_snapshot.standalone">
+<code class="descclassname">graph_snapshot.</code><code class="descname">standalone</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graph_snapshot.html#standalone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#graph_snapshot.standalone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a compilable .tex file for each image generated containing the image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> – Directory where ‘graph&lt;i&gt;.tex’ files are located.
+graphn.tex is included in the frame, if all files graphi.tex with 0 &lt; i &lt; n are in <cite>directory</cite>.</td>
 </tr>
 </tbody>
 </table>

@@ -83,23 +83,11 @@ In order to compile the output files of graph_snapshot, the following Latex pack
 
  - amsmath
  - tikz
+ - float
 
 In addition, you also need these tikzlibraries:
 
  - arrows
  - shapes
  - decorations
-
-
-
-
-
-
-
-
-
-
-
-
-
 

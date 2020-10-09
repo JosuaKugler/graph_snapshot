@@ -49,13 +49,6 @@ def Kruskal(G): # in dieser Implementierung O(E*(E + V)), optimal ist O(E log E)
             G.edges[edge]['color'] = 'red'
             gs.snapshot(G)
 
-        
-        
-
-        
-
-print(G.nodes)
-
 Kruskal(G)
 
 gs.compile("test_dir", scale_total=0.8, scale_edge_lengths=1, orientation = "0", overlap = "false", splines = "true",sep = "0")

@@ -43,6 +43,7 @@ You can then manually include the tex files into your document. The following tw
 
     >>> gs.standalone("directory_where_you_want_the_tikz_files")
 
+
 .. tikz:: [>=latex,line join=bevel,scale=1, auto, every node/.style={transform shape}] \node (a) at (101.02bp,141.67bp) [draw,circle] {$a$};
   \node (b) at (216.6bp,198.18bp) [draw,circle] {$b$};
   \node (c) at (18.0bp,18.0bp) [draw,circle] {$c$};
@@ -69,6 +70,19 @@ You can then manually include the tex files into your document. The following tw
   \draw [black,] (b) ..controls (112.48bp,173.05bp) and (75.483bp,217.12bp)  .. node {$4$} (d);
   \draw [black,] (b) ..controls (117.43bp,119.85bp) and (103.97bp,110.9bp)  .. node {$2$} (f);
   \draw [red,] (c) ..controls (76.514bp,48.056bp) and (77.234bp,63.827bp)  .. node {$2$} (f);
+
+If you want to include the tex files into your beamer class documentation you can instead use following to create a beamer slide containing all images:
+
+    >>> gs.beamer_slide("directory_where_you_want_the_tikz_files")
+
+To create a single latex document containg all images call:
+
+    >>> gs.latex_document("directory_where_you_want_the_tikz_files")
+
+The last two mentioned functions also provide several options, including: setting a title for the created beamer slide or latex document, define a path where the generated latex files will be placed or caption your images by providing a caption list as following:
+
+    >>> gs.beamer_slide("directory_where_you_want_the_tikz_files", "title", "directory_where_returndes_tex_file_is_placed", ["caption1","cpation2"])
+    >>> gs.latex_document("directory_where_you_want_the_tikz_files", "title", "directory_where_returndes_tex_file_is_placed", ["caption1","cpation2"])
 
 Configuration
 -------------
