@@ -1,0 +1,223 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Tutorial &#8212; graph_snapshot  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Installing" href="install.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="preliminaries">
+<h2>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline">¶</a></h2>
+<p>In order to use the graph_snapshot package, a basic knowledge of the <a class="reference external" href="https://networkx.github.io/documentation/stable/reference/classes/graph.html#graph" title="(in NetworkX v2.5)"><span class="xref std std-ref">networkx Graph</span></a> concept ist required.
+So make sure to be able to work with graphs.</p>
+</div>
+<div class="section" id="workflow">
+<h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h2>
+<p>First, import networkx and graph_snapshot and create a Graph:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">graph_snapshot</span> <span class="k">as</span> <span class="nn">gs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now, do something with the graph, e.g. add edges or perform an algorithm:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">edges</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Everytime you want the current state of the algorithm to be visualized, you can ‘snapshot’ the graph:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">snapshot</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="nb">len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">snapshot</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once you are done with your algorithm, it is time to create the tikz code from your snapshots:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;directory_where_you_want_the_tikz_files&quot;</span><span class="p">,</span> <span class="n">lenAsLabel</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The directory should look as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ls directory_where_you_want_the_tikz_files
+<span class="go">graph0.dot  graph0.tex  graph1.dot  graph1.tex</span>
+</pre></div>
+</div>
+<p>You can then manually include the tex files into your document. The following two images are created by calling:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">standalone</span><span class="p">(</span><span class="s2">&quot;directory_where_you_want_the_tikz_files&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure">
+<p><img src="_images/tikz-fe218e59561279ba711bba13dc007fa2159820b5.svg" alt="[&gt;=latex,line join=bevel,scale=1, auto, every node/.style={transform shape}] \node (a) at (101.02bp,141.67bp) [draw,circle] {$a$};
+\node (b) at (216.6bp,198.18bp) [draw,circle] {$b$};
+\node (c) at (18.0bp,18.0bp) [draw,circle] {$c$};
+\node (d) at (76.363bp,254.03bp) [draw,circle] {$d$};
+\node (f) at (177.69bp,135.62bp) [draw,circle] {$f$};
+\draw [black,] (a) ..controls (139.55bp,160.51bp) and (178.11bp,179.36bp)  .. node {$5$} (b);
+\draw [black,] (a) ..controls (74.905bp,102.77bp) and (44.248bp,57.101bp)  .. node {$4$} (c);
+\draw [black,] (a) ..controls (92.495bp,180.51bp) and (84.86bp,215.31bp)  .. node {$3$} (d);
+\draw [black,] (a) ..controls (131.41bp,139.27bp) and (147.45bp,138.01bp)  .. node {$2$} (f);
+\draw [black,] (b) ..controls (167.17bp,153.33bp) and (67.871bp,63.245bp)  .. node {$7$} (c);
+\draw [black,] (b) ..controls (172.73bp,215.65bp) and (120.33bp,236.52bp)  .. node {$4$} (d);
+\draw [black,] (b) ..controls (200.95bp,173.02bp) and (193.21bp,160.57bp)  .. node {$2$} (f);" /></p>
+</div><div class="figure">
+<p><img src="_images/tikz-93a256343b4ffd40f5f5bb9753949d5c55263c0d.svg" alt="[&gt;=latex,line join=bevel,scale=1, auto, every node/.style={transform shape}]\node (a) at (18.0bp,143.38bp) [draw,circle] {$a$};
+\node (b) at (142.92bp,136.8bp) [draw,circle] {$b$};
+\node (c) at (75.143bp,18.0bp) [draw,circle] {$c$};
+\node (d) at (45.066bp,253.35bp) [draw,circle] {$d$};
+\node (f) at (78.613bp,94.045bp) [draw,circle] {$f$};
+\draw [black,] (a) ..controls (59.848bp,141.17bp) and (101.04bp,139.0bp)  .. node {$5$} (b);
+\draw [black,] (a) ..controls (36.422bp,102.96bp) and (56.718bp,58.426bp)  .. node {$4$} (c);
+\draw [black,] (a) ..controls (27.399bp,181.57bp) and (35.682bp,215.22bp)  .. node {$3$} (d);
+\draw [black,] (a) ..controls (41.85bp,123.97bp) and (54.855bp,113.38bp)  .. node {$2$} (f);
+\draw [black,] (b) ..controls (120.77bp,97.974bp) and (97.066bp,56.427bp)  .. node {$7$} (c);
+\draw [black,] (b) ..controls (112.48bp,173.05bp) and (75.483bp,217.12bp)  .. node {$4$} (d);
+\draw [black,] (b) ..controls (117.43bp,119.85bp) and (103.97bp,110.9bp)  .. node {$2$} (f);
+\draw [red,] (c) ..controls (76.514bp,48.056bp) and (77.234bp,63.827bp)  .. node {$2$} (f);" /></p>
+</div><p>If you want to include the tex files into your beamer class documentation you can instead use following to create a beamer slide containing all images:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">beamer_slide</span><span class="p">(</span><span class="s2">&quot;directory_where_you_want_the_tikz_files&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To create a single latex document containg all images call:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">latex_document</span><span class="p">(</span><span class="s2">&quot;directory_where_you_want_the_tikz_files&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The last two mentioned functions also provide several options, including: setting a title for the created beamer slide or latex document, define a path where the generated latex files will be placed or caption your images by providing a caption list as following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">beamer_slide</span><span class="p">(</span><span class="s2">&quot;directory_where_you_want_the_tikz_files&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;directory_where_returndes_tex_file_is_placed&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;caption1&quot;</span><span class="p">,</span><span class="s2">&quot;caption2&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">latex_document</span><span class="p">(</span><span class="s2">&quot;directory_where_you_want_the_tikz_files&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;directory_where_returndes_tex_file_is_placed&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;caption1&quot;</span><span class="p">,</span><span class="s2">&quot;caption2&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="using-multiple-screenshot-series-graph-list">
+<h3>Using multiple “Screenshot series”: <cite>graph_list</cite><a class="headerlink" href="#using-multiple-screenshot-series-graph-list" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes you might want to visualize two algorithms in the same file.
+Then you should make use of the <cite>graph_list</cite> concept. First, specify a list for each algorithm:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">algorithm1_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">algorithm2_list</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>When calling <cite>gs.snapshot</cite>, decide for one list, e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">snapshot</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">graph_list</span> <span class="o">=</span> <span class="n">algorithm1_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, you can compile each list on it’s own:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;algorithm1_dir&quot;</span><span class="p">,</span> <span class="n">graph_list</span> <span class="o">=</span> <span class="n">algorithm1_list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;algorithm2_dir&quot;</span><span class="p">,</span> <span class="n">graph_list</span> <span class="o">=</span> <span class="n">algorithm2_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="keywordarguments-for-edges-nodes">
+<h3>Keywordarguments for Edges/Nodes<a class="headerlink" href="#keywordarguments-for-edges-nodes" title="Permalink to this headline">¶</a></h3>
+<p>As you have already seen, you can pass keywordarguments to graph edges. The same concept works for nodes as well.
+Any keyword that is understandable by tikz will have an effect on the resulting image.
+If you want to add specific style to your edges, you can also define your own tikz style in the document header and use that style as an edge attribute.
+There are also some edge keywords that have specific meaning.</p>
+<ul class="simple">
+<li><cite>len</cite> specifies the length of the edge. The graph layout algorithm will try to fit this lenght as close as possible, but as you can see in the second figure of the last section, if you hurt the triangle inequality, this can’t work.</li>
+<li><cite>weight</cite> specifies how much this edge is considered in computing the layout. In general, this option will not be needed.</li>
+<li><cite>label</cite> has the same meaning as in tikz, however it can be overwritten by the len argument if you set <cite>lenAsLabel = True</cite> when calling the compile function.</li>
+</ul>
+</div>
+<div class="section" id="keywordarguments-for-compile">
+<h3>Keywordarguments for <cite>compile</cite><a class="headerlink" href="#keywordarguments-for-compile" title="Permalink to this headline">¶</a></h3>
+<p>We have already mentioned the <cite>graph_list</cite> and <cite>lenAsLabel</cite> keywords in the previous two subsections. See the reference for a detailed description of the other arguments.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">graph_snapshot</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#preliminaries">Preliminaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="install.html" title="previous chapter">Installing</a></li>
+      <li>Next: <a href="examples.html" title="next chapter">Examples</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Nico Haaf, Josua Kugler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/tutorial.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

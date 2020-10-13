@@ -1,0 +1,217 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Examples &#8212; graph_snapshot  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Reference" href="reference.html" />
+    <link rel="prev" title="Tutorial" href="tutorial.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<p>A short introduction is to be found in the tutorial section. Here we will provide a thorough example how graph_snapshot can be used.</p>
+<p>Following python code takes a given graph G and applies Kruskal’s algorithm on it using networkx. In addition two small self-written function isCyclicUtil() and isCyclic() are used, they can be found at the end of the page.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">graph_snapshot</span> <span class="k">as</span> <span class="nn">gs</span>
+
+<span class="n">edges</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}),</span> <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})]</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">Kruskal</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+    <span class="n">gs</span><span class="o">.</span><span class="n">snapshot</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+    <span class="n">edges</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">edge</span><span class="p">:</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">edge</span><span class="p">][</span><span class="s2">&quot;len&quot;</span><span class="p">])</span>
+    <span class="n">edges</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+
+    <span class="n">colorededges</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">colorededges</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">edge</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1"># lowest weight</span>
+        <span class="n">testedges</span> <span class="o">=</span> <span class="n">colorededges</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">testedges</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isCyclic</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">testedges</span><span class="p">))):</span>
+            <span class="n">colorededges</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">edge</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+            <span class="n">gs</span><span class="o">.</span><span class="n">snapshot</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+
+<span class="n">Kruskal</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+
+<span class="n">gs</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;test_dir&quot;</span><span class="p">,</span> <span class="n">scale_total</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">scale_edge_lengths</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="n">overlap</span> <span class="o">=</span> <span class="s2">&quot;false&quot;</span><span class="p">,</span> <span class="n">splines</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span><span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
+<span class="n">gs</span><span class="o">.</span><span class="n">beamer_slide</span><span class="p">(</span><span class="s2">&quot;test_dir&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;very cool title&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;kruskal_slide.tex&quot;</span><span class="p">,</span> <span class="n">caption_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span><span class="s2">&quot;B&quot;</span><span class="p">,</span><span class="s2">&quot;D&quot;</span><span class="p">])</span>
+<span class="n">gs</span><span class="o">.</span><span class="n">latex_document</span><span class="p">(</span><span class="s2">&quot;test_dir&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;very cool title&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;testkruskal2.tex&quot;</span><span class="p">,</span> <span class="n">caption_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span><span class="s2">&quot;B&quot;</span><span class="p">,</span><span class="s2">&quot;D&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>In the first line of the Kruskal function a snapshot of the unmodified graph is taken. Then after each step of the algorithm a new snapshot of the modified Graph is taken by calling</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">snapshot</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After calling the Kruskal function each taken snapshot is converted into tikz code in a own graph&lt;i&gt;.tex file and placed into the directory “test_dir” by simply calling</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;test_dir&quot;</span><span class="p">,</span> <span class="n">scale_total</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">scale_edge_lengths</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="n">overlap</span> <span class="o">=</span> <span class="s2">&quot;false&quot;</span><span class="p">,</span> <span class="n">splines</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span><span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The meaning of the additional options can be found in the reference section. The “test_dir” directory looks as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ls directory_where_you_want_the_tikz_files
+<span class="go">graph0.dot  graph0.tex  graph1.dot  graph1.tex  graph2.dot  graph2.tex  graph3.dot  graph3.tex  graph4.dot  graph4.tex</span>
+</pre></div>
+</div>
+<p>After filling the “test_dir” directory with .tex files containing tikz-code we modify a given epmty .tex file to a beamer frame that can be included in a beamer presentation by calling</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">beamer_slide</span><span class="p">(</span><span class="s2">&quot;test_dir&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;very cool title&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;kruskal_slide.tex&quot;</span><span class="p">,</span> <span class="n">caption_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span><span class="s2">&quot;B&quot;</span><span class="p">,</span><span class="s2">&quot;D&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The beamer_slide function takes all “graph&lt;i&gt;.tex” files from the “test_dir” directory and includes them in the empty “kruskal_slide.tex” file creating a beamer_slide, entitles the frame with “very cool title” and captions the first three images. Content of “kruskal_slide.tex” after running:</p>
+<div class="highlight-tex notranslate"><div class="highlight"><pre><span></span><span class="k">\begin</span><span class="nb">{</span>frame<span class="nb">}</span>
+<span class="k">\frametitle</span><span class="nb">{</span>very cool title<span class="nb">}</span>
+<span class="k">\only</span>&lt;1&gt;<span class="nb">{</span><span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span> <span class="k">\input</span><span class="nb">{</span>test<span class="nb">_</span>dir/graph0.tex<span class="nb">}</span> <span class="k">\caption</span><span class="nb">{</span>A<span class="nb">}</span> <span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}}</span>
+<span class="k">\only</span>&lt;2&gt;<span class="nb">{</span><span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span> <span class="k">\input</span><span class="nb">{</span>test<span class="nb">_</span>dir/graph1.tex<span class="nb">}</span> <span class="k">\caption</span><span class="nb">{</span>B<span class="nb">}</span> <span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}}</span>
+<span class="k">\only</span>&lt;3&gt;<span class="nb">{</span><span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span> <span class="k">\input</span><span class="nb">{</span>test<span class="nb">_</span>dir/graph2.tex<span class="nb">}</span> <span class="k">\caption</span><span class="nb">{</span>D<span class="nb">}</span> <span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}}</span>
+<span class="k">\only</span>&lt;4&gt;<span class="nb">{</span><span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span> <span class="k">\input</span><span class="nb">{</span>test<span class="nb">_</span>dir/graph3.tex<span class="nb">}</span> <span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}}</span>
+<span class="k">\only</span>&lt;5&gt;<span class="nb">{</span><span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span> <span class="k">\input</span><span class="nb">{</span>test<span class="nb">_</span>dir/graph4.tex<span class="nb">}</span> <span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}}</span>
+<span class="k">\end</span><span class="nb">{</span>frame<span class="nb">}</span>
+</pre></div>
+</div>
+<p>Similar to the beamer_slide function the latex_document modifies a given empty .tex file to a compilable latex document by calling:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span><span class="o">.</span><span class="n">latex_document</span><span class="p">(</span><span class="s2">&quot;test_dir&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;very cool title&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;testkruskal2.tex&quot;</span><span class="p">,</span> <span class="n">caption_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span><span class="s2">&quot;B&quot;</span><span class="p">,</span><span class="s2">&quot;D&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The latex_document function takes all “graph&lt;i&gt;.tex” files from the “test_dir” directory and includes them in the empty “testkruskal2.tex” file creating a latex document, entitles the document with “very cool title” and captions the first three images. Content of “testkruskal2.tex” after running:</p>
+<div class="highlight-tex notranslate"><div class="highlight"><pre><span></span><span class="k">\documentclass</span><span class="nb">{</span>article<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="nb">{</span>tikz<span class="nb">}</span>
+<span class="k">\usetikzlibrary</span><span class="nb">{</span>decorations,arrows,shapes<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="nb">{</span>amsmath<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="nb">{</span>float<span class="nb">}</span>
+
+
+<span class="k">\begin</span><span class="nb">{</span>document<span class="nb">}</span>
+
+
+<span class="k">\section</span><span class="nb">{</span>very cool title<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span>[H] <span class="k">\input</span><span class="nb">{</span>test<span class="nb">_</span>dir/graph0.tex<span class="nb">}</span> <span class="k">\caption</span><span class="nb">{</span>A<span class="nb">}</span> <span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span>[H] <span class="k">\input</span><span class="nb">{</span>test<span class="nb">_</span>dir/graph1.tex<span class="nb">}</span> <span class="k">\caption</span><span class="nb">{</span>B<span class="nb">}</span> <span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span>[H] <span class="k">\input</span><span class="nb">{</span>test<span class="nb">_</span>dir/graph2.tex<span class="nb">}</span> <span class="k">\caption</span><span class="nb">{</span>D<span class="nb">}</span> <span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span>[H] <span class="k">\input</span><span class="nb">{</span>test<span class="nb">_</span>dir/graph3.tex<span class="nb">}</span> <span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span>[H] <span class="k">\input</span><span class="nb">{</span>test<span class="nb">_</span>dir/graph4.tex<span class="nb">}</span> <span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}</span>
+
+
+<span class="k">\end</span><span class="nb">{</span>document<span class="nb">}</span>
+</pre></div>
+</div>
+<p>As promised the code of the functions isCyclicUtil() and isCyclic():</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">isCyclicUtil</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="n">visited</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+        <span class="c1"># If the node is not visited then recurse on it</span>
+        <span class="k">if</span>  <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="kc">False</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">isCyclicUtil</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">visited</span><span class="p">,</span><span class="n">v</span><span class="p">)):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="c1"># If an adjacent vertex is visited and not parent of current vertex,</span>
+        <span class="c1"># then there is a cycle</span>
+        <span class="k">elif</span>  <span class="n">parent</span><span class="o">!=</span><span class="n">i</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">isCyclic</span><span class="p">(</span><span class="n">G</span><span class="p">):</span> <span class="c1">#gleich wie Tiefensuche, im Idealfall O(V+E)</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+        <span class="n">visited</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span><span class="kc">False</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">isCyclicUtil</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span><span class="n">visited</span><span class="p">,</span><span class="nb">list</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span><span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">graph_snapshot</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tutorial.html" title="previous chapter">Tutorial</a></li>
+      <li>Next: <a href="reference.html" title="next chapter">Reference</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Nico Haaf, Josua Kugler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/examples.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
