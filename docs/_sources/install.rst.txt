@@ -24,9 +24,9 @@ Github
 
   1. Clone the pygraphviz repository
 
-       git clone https://github.com/jakobus2205/graph_snapshot_pip.git
+       git clone https://github.com/NicoHaaf/graph_snapshot_pip.git
 
-  2. Change directory to "pygraphviz"
+  2. Change directory to "graph_snapshot_pip"
 
   3.  Run "python setup.py install" to build and install
 
