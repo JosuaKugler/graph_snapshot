@@ -81,8 +81,8 @@ To create a single latex document containg all images call:
 
 The last two mentioned functions also provide several options, including: setting a title for the created beamer slide or latex document, define a path where the generated latex files will be placed or caption your images by providing a caption list as following:
 
-    >>> gs.beamer_slide("directory_where_you_want_the_tikz_files", "title", "directory_where_returndes_tex_file_is_placed", ["caption1","cpation2"])
-    >>> gs.latex_document("directory_where_you_want_the_tikz_files", "title", "directory_where_returndes_tex_file_is_placed", ["caption1","cpation2"])
+    >>> gs.beamer_slide("directory_where_you_want_the_tikz_files", "title", "directory_where_returndes_tex_file_is_placed", ["caption1","caption2"])
+    >>> gs.latex_document("directory_where_you_want_the_tikz_files", "title", "directory_where_returndes_tex_file_is_placed", ["caption1","caption2"])
 
 Configuration
 -------------

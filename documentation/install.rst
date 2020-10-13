@@ -31,24 +31,6 @@ Github
   3.  Run "python setup.py install" to build and install
 
 
-If you don't have permission to install software on your
-system, you can install into another directory using
-the --user, --prefix, or --home flags to setup.py.
-
-For example
-
-::
-
-    python setup.py install --prefix=/home/username/python
-    or
-    python setup.py install --home=~
-    or
-    python setup.py install --user
-
-If you didn't install in the standard Python site-packages directory
-you will need to set your PYTHONPATH variable to the alternate location.
-See https://docs.python.org/2/install/index.html#search-path for further details.
-
 
 Requirements
 ============

@@ -38,7 +38,7 @@ Following python code takes a given graph G and applies Kruskal's algorithm on i
     gs.latex_document("test_dir", title="very cool title", path="testkruskal2.tex", caption_list=["A","B","D"])
 
 
-In the first line of the Kruskal function a snapshot of the unmodified graph is taken. And then after each step of the algorithm a new snapshot of the modified Graph is taken by calling
+In the first line of the Kruskal function a snapshot of the unmodified graph is taken. Then after each step of the algorithm a new snapshot of the modified Graph is taken by calling
 
     >>> gs.snapshot(G)
 
