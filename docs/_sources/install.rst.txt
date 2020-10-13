@@ -22,7 +22,7 @@ Installing from Source
 Github
 ------
 
-  1. Clone the pygraphviz repository
+  1. Clone the graph_snapshot_pip repository
 
        git clone https://github.com/NicoHaaf/graph_snapshot_pip.git
 
