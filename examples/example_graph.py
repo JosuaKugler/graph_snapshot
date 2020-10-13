@@ -1,6 +1,7 @@
+
 #test script for graph_snapshot.py
 import networkx as nx
-import graph_snapshot_pkg.graph_snapshot as gs
+import graph_snapshot as gs
 
 edges = [("a","b", {"len": 5}), ("c","b", {"len": 7}), ("a","d", {"len": 3}), ("d","b", {"len": 4}), ("a","c", {"len": 4}), ("a", "f", {"len": 2}), ("b", "f", {"len": 2}), ("c", "f", {"len": 2})]
 
